@@ -1,0 +1,44 @@
+{
+	"manifest_version": 2,
+	"name": "Youtube Playlist",
+	"version": "1.0",
+	"permissions": [ "storage", "unlimitedStorage" ],
+	"description": "Youtube live playlist",
+	"icons": {
+		"48": "./assets/img/icon-48.png"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*.youtube.com/*"
+			],
+			"js": [
+				"./assets/lib/jquery/jquery.js",
+				"./assets/lib/bootstrap/js/bootstrap.min.js"
+			],
+			"css": [
+				"./assets/lib/bootstrap/css/bootstrap.min.css",
+				"./assets/lib/font-awesome/css/font-awesome.min.css"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"matches": [
+				"https://www.youtube.com/watch?v=*"
+			],
+			"js": [
+				"./list.js",
+				"./storage.js"
+			],
+			"css": [
+				"./assets/css/list.css"
+			],
+			"run_at": "document_end"
+		}
+	],
+	"applications": {
+		"gecko": {
+			"id": "ondrejpit@azet.sk"
+		}
+	}
+}
