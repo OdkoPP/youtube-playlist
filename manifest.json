@@ -1,9 +1,10 @@
 {
 	"manifest_version": 2,
 	"name": "Youtube Playlist",
-	"version": "1.0",
+	"version": "1.1",
 	"permissions": [ "storage", "unlimitedStorage" ],
-	"description": "Youtube live playlist",
+	"description": "Add videos you see and like to queue and do not waste time searching and switching video every time the has video ended",
+	"author": "OdkoPP",
 	"icons": {
 		"48": "./assets/img/icon-48.png"
 	},
@@ -24,7 +25,7 @@
 		},
 		{
 			"matches": [
-				"https://www.youtube.com/watch?v=*"
+				"https://www.youtube.com/*"
 			],
 			"js": [
 				"./list.js",

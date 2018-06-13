@@ -2,39 +2,36 @@
 function displayList() {
     getAllVideos().then(
         suc => {
-            $('#ytp-list-container').remove();
             $('#ytp-container').remove();
 
-            $(`
-                <div id="ytp-container">
-                    <div id="ytp-list-controll">
-                        ${ suc.length > 0 ? `
-                            <button id="ytp-list-controll-next"> Next </button>
-                            <button id="ytp-list-controll-empty"> Empty list</button>
-                        `: ""}
-                    </div>
-                    <div id="ytp-list-container">
-                        ${ suc.map( (v, i) => `
-                            <div class="ytp-list-item" title="${ v.name }">
-                                <img class="ytp-list-item-img" src="${ v.img }">
-                                <div class="ytp-list-item-delete" data-video-index="${ i }" title="Remove from list">-</div>
-                            </div>
-                        `).join('') }
-                    </div>
-                </div>
-            `).appendTo('#page-manager');
-
-            $('.ytp-list-item-delete').off('click').on('click', ( e ) => {
-                const videoIndex = $( e.target ).data('video-index');
-                
-                if( videoIndex !== undefined ) {
-                    removeVideoFromList( videoIndex );
-                } else {
-                    displayList();
-                }
-            });
-
             if( suc.length > 0 ) {
+                $(`
+                    <div id="ytp-container">
+                        <div id="ytp-list-controll">
+                                <button id="ytp-list-controll-next"> Next </button>
+                                <button id="ytp-list-controll-empty"> Empty list</button>
+                        </div>
+                        <div id="ytp-list-container">
+                            ${ suc.map( (v, i) => `
+                                <div class="ytp-list-item" title="${ v.name }">
+                                    <img class="ytp-list-item-img" src="${ v.img }">
+                                    <div class="ytp-list-item-delete" data-video-index="${ i }" title="Remove from list">-</div>
+                                </div>
+                            `).join('') }
+                        </div>
+                    </div>
+                `).appendTo('#masthead');
+
+                $('.ytp-list-item-delete').off('click').on('click', ( e ) => {
+                    const videoIndex = $( e.target ).data('video-index');
+                    
+                    if( videoIndex !== undefined ) {
+                        removeVideoFromList( videoIndex );
+                    } else {
+                        displayList();
+                    }
+                });
+
                 $('#ytp-list-controll-next').off('click').on('click', () => {
                     if( suc.length === 0) {
                         alert('no next')
@@ -53,7 +50,7 @@ function displayList() {
 }
 
 // Display "+" button inside every video thumbnail
-function displayAddButton() {
+function displayAddButton() {    
     $('.ytp-add').remove();
 
     $('div#dismissable.ytd-compact-video-renderer').each( (i, e) => {
@@ -126,35 +123,37 @@ function emptyList() {
 }
 
 // Play next video from list
-function playNext() {   
-    getAllVideos().then(
-        suc => {
-            if( suc.length ) {
-                const nextVideo = suc[0];
-                removeVideoFromList( 0 ).then(
-                    suc => window.location.href = "/watch?v=" + nextVideo.id,
-                    err => console.log( err )
-                )
-            }
-        },
-        err => console.log( err )
-    );
+var nextVideoTimeout;
+function playNext() {
+    window.clearTimeout( nextVideoTimeout );
+
+    nextVideoTimeout = setTimeout( () => {
+        getAllVideos().then(
+            suc => {
+                if( suc.length ) {
+                    const nextVideo = suc[0];
+                    removeVideoFromList( 0 ).then(
+                        suc => window.location.href = "/watch?v=" + nextVideo.id,
+                        err => console.log( err )
+                    )
+                }
+            },
+            err => console.log( err )
+        );
+    }, 100);
 }
 
-// Display list element when 'page-manager' element is ready
-var checkPageManagerElementExist = setInterval( () => {
-    if ($('#page-manager').length) {
-        clearInterval( checkPageManagerElementExist );
-        displayList();
-    }
-}, 100);
+// Display list element with listed videos
+$("body").on("DOMSubtreeModified", "#masthead #container", () => {
+    displayList();
 
-// Display add buttons when images are loaded 
-$("body").on('DOMSubtreeModified', "#items #dismissable img", () => {   
-    displayAddButton();
+    // Play next video after current video ended
+    $("video").off("ended").on("ended", () => {
+        playNext();
+    });
 });
 
-// Play next video after current video ended
-$('video').on('ended', () => {
-    playNext();
+// Display add buttons when images are loaded
+$("body").on("DOMSubtreeModified", "#items #dismissable img", () => {
+    displayAddButton();
 });

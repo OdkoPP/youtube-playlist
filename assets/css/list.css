@@ -1,5 +1,6 @@
 #ytp-container {
     position: fixed;
+    margin-top: 0;
     width: 90px;
     right: 0px;
     border: 1px solid black;
