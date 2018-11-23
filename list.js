@@ -159,6 +159,6 @@ $("body").on("DOMSubtreeModified", "#masthead #container", () => {
 });
 
 // Display add buttons when images are loaded
-$("body").on("DOMSubtreeModified", "#items #dismissable img", () => {
+$("body").on("DOMSubtreeModified", "#dismissable img", () => {
     displayAddButton();
 });

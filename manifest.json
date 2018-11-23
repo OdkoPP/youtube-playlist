@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Youtube Playlist",
-	"version": "1.2",
+	"version": "1.3",
 	"permissions": [ "storage", "unlimitedStorage" ],
 	"description": "Add videos you see and like to queue and do not waste time searching and switching video every time the has video ended",
 	"author": "OdkoPP",
@@ -14,11 +14,9 @@
 				"*://*.youtube.com/*"
 			],
 			"js": [
-				"./assets/lib/jquery/jquery.js",
-				"./assets/lib/bootstrap/js/bootstrap.min.js"
+				"./assets/lib/jquery/jquery.js"
 			],
 			"css": [
-				"./assets/lib/bootstrap/css/bootstrap.min.css",
 				"./assets/lib/font-awesome/css/font-awesome.min.css"
 			],
 			"run_at": "document_start"
