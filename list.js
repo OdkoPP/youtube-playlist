@@ -50,20 +50,25 @@ function displayList() {
 }
 
 // Display "+" button inside every video thumbnail
-function displayAddButton() {    
-    $('.ytp-add').remove();
+var displayAddButtonTimeout;
+function displayAddButton() {
+    window.clearTimeout( displayAddButtonTimeout );
 
-    $('div#dismissable.ytd-compact-video-renderer').each( (i, e) => {
-        $(`<div class="ytp-add" title="Add to list">+</div>`).appendTo( e );
-    });
+    displayAddButtonTimeout = setTimeout( () => {
+        $('.ytp-add').remove();
 
-    $('.ytp-add').off('click').on('click', (e) => {
-        const videoContainer = $( e.target ).parent();
-        const videoId   = videoContainer.find('a').attr('href').trim().split('v=')[1];
-        const videoName = videoContainer.find('a h3').text().trim();
-        const videoImg  = videoContainer.find('#thumbnail img').attr('src');
-        addVideoToList( videoId, videoName, videoImg );
-    });
+        $('div#dismissable.ytd-compact-video-renderer, div#dismissable.ytd-grid-video-renderer, div#dismissable.ytd-video-renderer').each( (i, e) => {
+            $(`<div class="ytp-add" title="Add to list">+</div>`).prependTo( e );
+        });
+
+        $('.ytp-add').off('click').on('click', (e) => {
+            const videoContainer = $( e.target ).parent();
+            const videoId   = videoContainer.find('a').attr('href').trim().split('v=')[1];
+            const videoName = videoContainer.find('a h3').text().trim();
+            const videoImg  = videoContainer.find('#thumbnail img').attr('src');
+            addVideoToList( videoId, videoName, videoImg );
+        });
+    }, 100);
 }
 
 // Add one video to list
