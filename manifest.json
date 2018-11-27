@@ -14,7 +14,8 @@
 				"*://*.youtube.com/*"
 			],
 			"js": [
-				"./assets/lib/jquery/jquery.js"
+				"./assets/lib/jquery/jquery.js",
+				"./assets/lib/jquery-ui/jquery-ui.min.js"
 			],
 			"css": [
 				"./assets/lib/font-awesome/css/font-awesome.min.css"

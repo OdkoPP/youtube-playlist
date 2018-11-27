@@ -3,12 +3,34 @@
     margin-top: 0;
     width: 90px;
     right: 0px;
-    border: 1px solid black;
-    /*height: 1000px;*/
-    background-color: red;
+    height: 80px;
 }
 
-#ytp-list-controll button {
+#ytp-list {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+
+    /* Hide scrollbar */
+    padding-right: 17px; 
+    box-sizing: content-box;
+}
+
+#ytp-list-control {
+    border: 1px solid black;
+}
+
+#ytp-list-control-next {
+    cursor: pointer;
+}
+
+#ytp-list-control-empty {
+    cursor: pointer;
+}
+
+#ytp-list-control button {
     background-color: white;
     border: 0;
     border-bottom: 1px solid black;
@@ -30,9 +52,10 @@
     color: white;
     background-color: green;
     padding-left: 5px;
-    padding-top: 2px;
+    padding-top: 4px;
     border: 1px solid whitesmoke;
     cursor: cell;
+    -moz-user-select: none; /* Firefox */
 }
 
 .ytp-add:hover {
@@ -42,24 +65,23 @@
 
 .ytp-list-item-img {
     width: 90px;
-    cursor: pointer;
     border-bottom: 3px solid grey;
 }
 
 .ytp-list-item-delete {
     opacity: 0.5;
     position: absolute;
-    width: 23px;
-    height: 25px;
+    width: 15px;
+    height: 22px;
     font-size: 30px;
-    line-height: 19px;
+    line-height: 20px;
     color: white;
     background-color: red;
-    padding-left: 5px;
-    padding-top: -2px;
-    margin-top: -32px;
+    padding-left: 7px;
+    margin-top: -27px;
     border: 1px solid whitesmoke;
-    cursor: not-allowed;
+    cursor: pointer;
+    -moz-user-select: none; /* Not selectable text */
 }
 
 .ytp-list-item-delete:hover {
