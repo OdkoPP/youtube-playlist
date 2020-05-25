@@ -83,7 +83,13 @@ function displayAddButton() {
     displayAddButtonTimeout = setTimeout( () => {
         $('.ytp-add').remove();
 
-        $('div#dismissable.ytd-compact-video-renderer, div#dismissable.ytd-grid-video-renderer, div#dismissable.ytd-video-renderer').each( (i, e) => {
+        const videContainerId = 'div#dismissable';
+        const videContainerClasses = [
+            'ytd-rich-grid-video-renderer',    // Home screen
+            'ytd-video-renderer',              // Search screen
+            'ytd-compact-video-renderer'       // Player screen
+        ];
+        $(videContainerId + '.' + videContainerClasses.join(', ' + videContainerId + '.')).each( (i, e) => {
             $(`<div class="ytp-add" title="Add to list">+</div>`).prependTo(e);
         });
 
@@ -164,7 +170,7 @@ function playNext() {
                 if(suc.length) {
                     const nextVideo = suc[0];
                     removeVideoFromList(0).then(
-                        suc => window.location.href = "/watch?v=" + nextVideo.id,
+                        suc => window.location.href = '/watch?v=' + nextVideo.id + '&fullscreen=' + document.fullscreen,
                         err => console.log(err)
                     )
                 }

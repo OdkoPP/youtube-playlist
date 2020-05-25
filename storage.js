@@ -1,9 +1,10 @@
 const videosListStorageKeyName = "videos";
+const browser = browser || chrome;
 
-function getAllVideos() {   
+function getAllVideos() {
     return browser.storage.local.get( videosListStorageKeyName ).then(
         suc => ( suc[videosListStorageKeyName] !== undefined ) ? suc[videosListStorageKeyName] : [],
-        err => "Failed to get all videos"
+        err => 'Failed to get all videos'
     );
 }
 
@@ -12,8 +13,4 @@ function setAllVideos( allVideos ) {
         suc => allVideos,
         err => 'Failed to set all accounts'
     );
-}
-
-function deleteAllVideos() {
-    return browser.storage.local.clear();
 }
